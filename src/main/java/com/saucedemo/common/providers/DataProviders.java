@@ -2,8 +2,9 @@ package com.saucedemo.common.providers;
 
 import org.testng.annotations.DataProvider;
 
+import static com.saucedemo.common.Constants.LoginPageConstants.COMMON_PASSWORD;
+
 public class DataProviders {
-    public static final String COMMON_PASSWORD = "secret_sauce";
 
     @DataProvider(name = "auth-data")
     public static Object[][] authData() {
