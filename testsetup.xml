@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+
+<suite name="Authorization" verbose="1" >
+    <test name="Success Authentication" >
+        <parameter name="lockedUser" value="locked_out_user"/>
+        <classes>
+            <class name="TestAuth" />
+        </classes>
+    </test>
+</suite>

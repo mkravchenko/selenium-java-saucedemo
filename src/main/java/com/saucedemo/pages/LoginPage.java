@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class LoginPage extends BasePage {
+
     @FindBy(id = "user-name")
     private WebElement userName;
 
@@ -14,17 +15,24 @@ public class LoginPage extends BasePage {
     @FindBy(id = "login-button")
     private WebElement loginButton;
 
+    @FindBy(xpath = ".//*[@data-test='error']")
+    private WebElement errorMessage;
+
     public LoginPage(WebDriver driver) {
         super(driver);
     }
 
-    public LoginPage login() {
-        // TODO: move to configs
-        userName.sendKeys("standard_user");
-        password.sendKeys("secret_sauce");
+    public void login(String userName, String password, boolean wait_for_bp_loaded) {
+        this.userName.sendKeys(userName);
+        this.password.sendKeys(password);
         loginButton.click();
-        this.wait_for_base_page_loaded();
-        return this;
+        if (wait_for_bp_loaded) {
+            this.wait_for_base_page_loaded();
+        }
+    }
+
+    public String getErrorMessage() {
+        return this.errorMessage.getText();
     }
 
 
