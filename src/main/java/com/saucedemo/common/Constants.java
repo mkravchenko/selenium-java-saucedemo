@@ -3,7 +3,7 @@ package com.saucedemo.common;
 import java.time.Duration;
 
 public class Constants {
-    public static class Urls {
+    public static class UrlsConstants {
         public static final String SAUCE_DEMO_BASE_URL = "https://www.saucedemo.com";
         public static final String INVENTORY_PAGE_URL = SAUCE_DEMO_BASE_URL + "/inventory.html";
     }
@@ -13,6 +13,10 @@ public class Constants {
     }
 
     public static class LoginPageConstants {
+
+        public static final String STANDARD_USER = "standard_user";
+        public static final String PROBLEM_USER = "problem_user";
+        public static final String PERFORMANCE_GLITCH_USER = "performance_glitch_user";
         public static final String COMMON_PASSWORD = "secret_sauce";
         public static final String LOCKED_USER_TEXT = "Epic sadface: Sorry, this user has been locked out.";
         public static final String WRONG_USER_TEXT = "Epic sadface: Username and password do not match any user in this service";

@@ -2,16 +2,16 @@ package com.saucedemo.common.providers;
 
 import org.testng.annotations.DataProvider;
 
-import static com.saucedemo.common.Constants.LoginPageConstants.COMMON_PASSWORD;
+import static com.saucedemo.common.Constants.LoginPageConstants.*;
 
 public class DataProviders {
 
     @DataProvider(name = "auth-data")
     public static Object[][] authData() {
         return new Object[][]{
-                {"standard_user", COMMON_PASSWORD},
-                {"problem_user", COMMON_PASSWORD},
-                {"performance_glitch_user", COMMON_PASSWORD}
+                {STANDARD_USER, COMMON_PASSWORD},
+                {PROBLEM_USER, COMMON_PASSWORD},
+                {PERFORMANCE_GLITCH_USER, COMMON_PASSWORD}
         };
     }
 

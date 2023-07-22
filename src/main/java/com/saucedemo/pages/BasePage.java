@@ -2,6 +2,7 @@ package com.saucedemo.pages;
 
 import com.saucedemo.common.Constants.DefaultTimeouts;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -18,6 +19,10 @@ public class BasePage {
     @FindBy(id = "shopping_cart_container")
     WebElement shoppingCard;
 
+    @FindBy(className = "shopping_cart_badge")
+    WebElement shoppingCardBadge;
+
+
     public BasePage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -27,34 +32,40 @@ public class BasePage {
         return element.getText();
     }
 
+    public int getNumberOfAddedProducts(){
+        try {
+            return Integer.parseInt(shoppingCardBadge.getText());
+        } catch (NoSuchElementException e) {
+            return 0;
+        }
+    }
     public YourCartPage openMainMenu() {
         mainMenu.click();
-        return new YourCartPage(this.driver);
+        return new YourCartPage(driver);
     }
 
     public YourCartPage openShoppingCard() {
         shoppingCard.click();
-        return new YourCartPage(this.driver);
+        return new YourCartPage(driver);
     }
 
     public WebDriver wait_for_base_page_loaded() {
         // TODO
         this.waitForElementToBeVisible(mainMenu);
-        return this.driver;
+        return driver;
     }
 
     public WebDriver waitForElementToBeVisible(WebElement element) {
-        new WebDriverWait(this.driver, DefaultTimeouts.EXPLICIT_WAIT).until(ExpectedConditions.visibilityOf(element));
-        return this.driver;
+        new WebDriverWait(driver, DefaultTimeouts.EXPLICIT_WAIT).until(ExpectedConditions.visibilityOf(element));
+        return driver;
     }
 
     public String getUrl() {
-        return this.driver.getCurrentUrl();
+        return driver.getCurrentUrl();
     }
 
     public boolean isPageLoaded(By by, String expectedText) {
-        // TODO
-        this.driver.findElement(by);
+        driver.findElement(by);
         return true;
     }
 }
