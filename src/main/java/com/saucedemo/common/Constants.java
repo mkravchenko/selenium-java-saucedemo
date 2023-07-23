@@ -21,4 +21,11 @@ public class Constants {
         public static final String LOCKED_USER_TEXT = "Epic sadface: Sorry, this user has been locked out.";
         public static final String WRONG_USER_TEXT = "Epic sadface: Username and password do not match any user in this service";
     }
+
+    public static class ProductSortingValues {
+        public static final String NAME_A_TO_Z = "Name (A to Z)";
+        public static final String NAME_Z_TO_A = "Name (Z to A)";
+        public static final String PRICE_LOW_TO_HIGH = "Price (low to high)";
+        public static final String PRICE_HIGH_TO_LOW = "Price (high to low)";
+    }
 }

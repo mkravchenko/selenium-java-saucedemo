@@ -32,13 +32,14 @@ public class BasePage {
         return element.getText();
     }
 
-    public int getNumberOfAddedProducts(){
+    public int getNumberOfAddedProducts() {
         try {
             return Integer.parseInt(shoppingCardBadge.getText());
         } catch (NoSuchElementException e) {
             return 0;
         }
     }
+
     public YourCartPage openMainMenu() {
         mainMenu.click();
         return new YourCartPage(driver);
@@ -49,14 +50,19 @@ public class BasePage {
         return new YourCartPage(driver);
     }
 
-    public WebDriver wait_for_base_page_loaded() {
-        // TODO
+    public void wait_for_base_page_loaded() {
         this.waitForElementToBeVisible(mainMenu);
-        return driver;
     }
 
     public WebDriver waitForElementToBeVisible(WebElement element) {
-        new WebDriverWait(driver, DefaultTimeouts.EXPLICIT_WAIT).until(ExpectedConditions.visibilityOf(element));
+        new WebDriverWait(driver, DefaultTimeouts.EXPLICIT_WAIT)
+                .until(ExpectedConditions.visibilityOf(element));
+        return driver;
+    }
+
+    public WebDriver waitForTextToBePresentInElement(WebElement element, String text) {
+        new WebDriverWait(driver, DefaultTimeouts.EXPLICIT_WAIT)
+                .until(ExpectedConditions.textToBePresentInElement(element, text));
         return driver;
     }
 

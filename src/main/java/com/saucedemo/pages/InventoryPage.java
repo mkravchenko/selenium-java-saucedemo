@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
 import java.util.Optional;
@@ -38,12 +39,17 @@ public class InventoryPage extends BasePage {
     @FindBy(className = "inventory_item_name")
     private List<WebElement> productsListNames;
 
-
     @FindBy(xpath = ".//*[@class='inventory_item']//button[text()='Add to cart']")
     private List<WebElement> addButtonsList;
 
     @FindBy(xpath = ".//*[@class='inventory_item']//button[text()='Remove']")
     private List<WebElement> removeButtonsList;
+
+    @FindBy(xpath = ".//span[@class='select_container']/span[@class='active_option']")
+    private WebElement currentSortOption;
+
+    @FindBy(className = "product_sort_container")
+    private WebElement dropDownSort;
 
     public InventoryPage(WebDriver driver) {
         super(driver);
@@ -70,5 +76,12 @@ public class InventoryPage extends BasePage {
                 filter(productEl -> productEl.findElement(By.className("inventory_item_name"))
                         .getText().equals(text))
                 .findFirst();
+    }
+
+    public void sortProducts(String sortValue){
+        Select selectMenu = new Select(dropDownSort);
+        selectMenu.selectByVisibleText(sortValue);
+        this.waitForTextToBePresentInElement(currentSortOption, sortValue);
+
     }
 }
