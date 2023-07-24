@@ -1,8 +1,10 @@
 package com.saucedemo.common.providers;
 
 import org.testng.annotations.DataProvider;
+import java.util.Collection;
 
 import static com.saucedemo.common.Constants.LoginPageConstants.*;
+import static com.saucedemo.common.Constants.ProductSortingValues.*;
 
 public class DataProviders {
 
@@ -23,6 +25,20 @@ public class DataProviders {
         };
     }
 
+    @DataProvider(name = "sort-by-name-products")
+    public static Object[][] sortByNameData() {
+        return new Object[][]{
+                {NAME_Z_TO_A},
+                {NAME_A_TO_Z}
+        };
+    }
 
+    @DataProvider(name = "sort-by-price-products")
+    public static Object[][] sortByPriceData() {
+        return new Object[][]{
+                {PRICE_LOW_TO_HIGH},
+                {PRICE_HIGH_TO_LOW}
+        };
+    }
 
 }

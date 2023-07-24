@@ -6,9 +6,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
 
 public class InventoryPage extends BasePage {
 
@@ -39,6 +44,9 @@ public class InventoryPage extends BasePage {
     @FindBy(className = "inventory_item_name")
     private List<WebElement> productsListNames;
 
+    @FindBy(className = "inventory_item_price")
+    private List<WebElement> productsListPrices;
+
     @FindBy(xpath = ".//*[@class='inventory_item']//button[text()='Add to cart']")
     private List<WebElement> addButtonsList;
 
@@ -60,6 +68,19 @@ public class InventoryPage extends BasePage {
     }
     public List<String> getListOfProductsNames() {
         return productsListNames.stream().map(WebElement::getText).collect(Collectors.toList());
+    }
+
+    public List<Float> getListOfProductsPrices() {
+        List<String> priceList = productsListPrices.stream().map(WebElement::getText).toList();
+        Pattern pattern = Pattern.compile("[0-9]*\\.?[0-9]+");
+        List<Float> prices = new ArrayList<>();
+        for(String itemPrice: priceList){
+            Matcher matcher = pattern.matcher(itemPrice);
+            if (matcher.find()){
+                prices.add(Float.parseFloat(matcher.group(0)));
+            }
+        }
+        return prices;
     }
 
     public void addAllProductsToCart() {
