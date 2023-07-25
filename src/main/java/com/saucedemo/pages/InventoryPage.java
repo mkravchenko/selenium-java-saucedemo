@@ -27,7 +27,7 @@ public class InventoryPage extends BasePage {
     private WebElement productName;
 
     @FindBy(className = "inventory_item_desc")
-    private WebElement productDescription;
+    private List<WebElement> productDescription;
 
     @FindBy(id = "add-to-cart-sauce-labs-backpack")
     private WebElement addToCart;
@@ -66,6 +66,11 @@ public class InventoryPage extends BasePage {
     public int getProductsNumber() {
         return productsList.size();
     }
+
+    public List<String> getListOfProductsDescriptions() {
+        return productDescription.stream().map(WebElement::getText).collect(Collectors.toList());
+    }
+
     public List<String> getListOfProductsNames() {
         return productsListNames.stream().map(WebElement::getText).collect(Collectors.toList());
     }
