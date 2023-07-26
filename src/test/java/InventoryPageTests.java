@@ -28,16 +28,24 @@ public class InventoryPageTests extends BaseTest {
     }
 
     @Test
-    public void checkDescriptionVisible() {
+    public void checkDescriptionsArePresent() {
         List<String> descriptions = productPage.getListOfProductsDescriptions();
-        boolean isEmptyDescription = descriptions.stream().allMatch(item -> (!item.isEmpty() && !item.isBlank()));
+        boolean areImagesCorrect = descriptions.stream().allMatch(item -> (!item.isEmpty() && !item.isBlank()));
+        Assert.assertTrue(areImagesCorrect, "Images present and has correct format");
+    }
+
+    @Test
+    public void checkImagesArePresent() {
+        List<String> img = productPage.getListOfProductsImg();
+        boolean isEmptyDescription = img.stream().allMatch(item -> (item.endsWith(".jpg")));
         Assert.assertTrue(isEmptyDescription, "Description can't be empty");
     }
+
 
     @Test(dataProvider = "sort-by-name-products", dataProviderClass = DataProviders.class)
     public void checkProductSortingByName(String sortBy, boolean isReversSearch) {
         List<String> expectedListOfProducts = productPage.getListOfProductsNames();
-        expectedListOfProducts = (List<String>) MiscUtils.sortList(expectedListOfProducts, isReversSearch);
+        MiscUtils.sortList(expectedListOfProducts, isReversSearch);
         productPage.sortProducts(sortBy);
         List<String> productNamesAfterSorting = productPage.getListOfProductsNames();
         Assert.assertEquals(productNamesAfterSorting, expectedListOfProducts,
@@ -47,7 +55,7 @@ public class InventoryPageTests extends BaseTest {
     @Test(dataProvider = "sort-by-price-products", dataProviderClass = DataProviders.class)
     public void checkProductSortingByPrice(String sortBy, boolean isReversSearch) {
         List<Float> expectedListOfProducts = productPage.getListOfProductsPrices();
-        expectedListOfProducts = (List<Float>) MiscUtils.sortList(expectedListOfProducts, isReversSearch);
+        MiscUtils.sortList(expectedListOfProducts, isReversSearch);
         productPage.sortProducts(sortBy);
         List<Float> productNamesAfterSorting = productPage.getListOfProductsPrices();
         Assert.assertEquals(productNamesAfterSorting, expectedListOfProducts,

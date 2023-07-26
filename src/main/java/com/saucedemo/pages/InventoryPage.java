@@ -4,10 +4,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -17,35 +18,24 @@ import java.util.stream.Collectors;
 
 public class InventoryPage extends BasePage {
 
-    @FindBy(xpath = ".//*[@class='header_secondary_container']/span")
+    @FindBy(className = "title")
     private WebElement title;
 
-    @FindBy(className = "inventory_item_img")
-    private WebElement productImage;
 
-    @FindBy(className = "inventory_item_name")
-    private WebElement productName;
+    @FindBy(xpath = ".//*[@id='inventory_container']//img['inventory_item_img']")
+    private List<WebElement> productImagesList;
 
     @FindBy(className = "inventory_item_desc")
-    private List<WebElement> productDescription;
-
-    @FindBy(id = "add-to-cart-sauce-labs-backpack")
-    private WebElement addToCart;
-
-    @FindBy(id = "remove-sauce-labs-backpack")
-    private WebElement removeFromCart;
-
-    @FindBy(id = "inventory_item_price")
-    private WebElement price;
+    private List<WebElement> productDescriptionsList;
 
     @FindBy(className = "inventory_item")
     private List<WebElement> productsList;
 
     @FindBy(className = "inventory_item_name")
-    private List<WebElement> productsListNames;
+    private List<WebElement> productsNamesList;
 
     @FindBy(className = "inventory_item_price")
-    private List<WebElement> productsListPrices;
+    private List<WebElement> productsPricesList;
 
     @FindBy(xpath = ".//*[@class='inventory_item']//button[text()='Add to cart']")
     private List<WebElement> addButtonsList;
@@ -67,21 +57,25 @@ public class InventoryPage extends BasePage {
         return productsList.size();
     }
 
+    public List<String> getListOfProductsImg() {
+        return productImagesList.stream().map(el -> el.getAttribute("src")).collect(Collectors.toList());
+    }
+
     public List<String> getListOfProductsDescriptions() {
-        return productDescription.stream().map(WebElement::getText).collect(Collectors.toList());
+        return productDescriptionsList.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 
     public List<String> getListOfProductsNames() {
-        return productsListNames.stream().map(WebElement::getText).collect(Collectors.toList());
+        return productsNamesList.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 
     public List<Float> getListOfProductsPrices() {
-        List<String> priceList = productsListPrices.stream().map(WebElement::getText).toList();
+        List<String> priceList = productsPricesList.stream().map(WebElement::getText).toList();
         Pattern pattern = Pattern.compile("[0-9]*\\.?[0-9]+");
         List<Float> prices = new ArrayList<>();
-        for(String itemPrice: priceList){
+        for (String itemPrice : priceList) {
             Matcher matcher = pattern.matcher(itemPrice);
-            if (matcher.find()){
+            if (matcher.find()) {
                 prices.add(Float.parseFloat(matcher.group(0)));
             }
         }
@@ -104,10 +98,16 @@ public class InventoryPage extends BasePage {
                 .findFirst();
     }
 
-    public void sortProducts(String sortValue){
+    public void sortProducts(String sortValue) {
         Select selectMenu = new Select(dropDownSort);
         selectMenu.selectByVisibleText(sortValue);
         this.waitForTextToBePresentInElement(currentSortOption, sortValue);
 
+    }
+
+    public ProductDetailsPage pressProductByName(String productName) {
+        Assert.assertTrue(this.getElementByText(productName).isPresent(), "Element should be present");
+        this.getElementByText(productName).get().click();
+        return PageFactory.initElements(this.driver, ProductDetailsPage.class);
     }
 }
