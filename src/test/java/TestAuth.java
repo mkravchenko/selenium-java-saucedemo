@@ -1,6 +1,7 @@
 import com.saucedemo.common.providers.DataProviders;
 import com.saucedemo.pages.LoginPage;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
@@ -25,7 +26,7 @@ public class TestAuth extends BaseTest {
 
     @Test
     @Parameters({"lockedUser"})
-    public void testLockedUserAuth(String userName) {
+    public void testLockedUserAuth(@Optional("locked_out_user") String userName) {
         loginPage.login(userName, LoginPageConstants.COMMON_PASSWORD, false);
         assertEquals(loginPage.getErrorMessage(), LoginPageConstants.LOCKED_USER_TEXT,
                 "Locked user login with problems.");
@@ -37,5 +38,4 @@ public class TestAuth extends BaseTest {
         assertEquals(loginPage.getErrorMessage(), LoginPageConstants.WRONG_USER_TEXT,
                 "Wrong user login workflow is not expected");
     }
-
 }
