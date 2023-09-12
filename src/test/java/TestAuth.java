@@ -12,7 +12,7 @@ import static org.testng.Assert.assertEquals;
 public class TestAuth extends BaseTest {
 
     @BeforeMethod(alwaysRun = true)
-    public void setupTest() {
+    public void setUpTest() {
         basePage.driver.manage().deleteAllCookies();
         basePage.driver.get(UrlsConstants.SAUCE_DEMO_BASE_URL);
         loginPage = new LoginPage(basePage.driver);
@@ -29,7 +29,7 @@ public class TestAuth extends BaseTest {
     public void testLockedUserAuth(@Optional("locked_out_user") String userName) {
         loginPage.login(userName, LoginPageConstants.COMMON_PASSWORD, false);
         assertEquals(loginPage.getErrorMessage(), LoginPageConstants.LOCKED_USER_TEXT,
-                "Locked user login with problems.");
+                "Locked user login operation failed.");
     }
 
     @Test(dataProvider = "wrong-auth-data", dataProviderClass = DataProviders.class)

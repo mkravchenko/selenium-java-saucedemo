@@ -23,7 +23,6 @@ public class BaseTest {
         basePage.driver.manage().timeouts().implicitlyWait(DefaultTimeouts.IMPLICIT_WAIT);
         basePage.driver.manage().window().maximize();
         basePage.driver.get(UrlsConstants.SAUCE_DEMO_BASE_URL);
-        basePage.driver.get(UrlsConstants.SAUCE_DEMO_BASE_URL);
     }
 
     @AfterClass(alwaysRun = true)

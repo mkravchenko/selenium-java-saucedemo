@@ -18,10 +18,10 @@ import java.util.stream.Collectors;
 
 public class InventoryPage extends BasePage {
 
+    final String addButtonLocator = ".//button[text()='Add to cart']";
     @FindBy(className = "title")
+
     private WebElement title;
-
-
     @FindBy(xpath = ".//*[@id='inventory_container']//img['inventory_item_img']")
     private List<WebElement> productImagesList;
 
@@ -37,10 +37,10 @@ public class InventoryPage extends BasePage {
     @FindBy(className = "inventory_item_price")
     private List<WebElement> productsPricesList;
 
-    @FindBy(xpath = ".//*[@class='inventory_item']//button[text()='Add to cart']")
+    @FindBy(xpath = addButtonLocator)
     private List<WebElement> addButtonsList;
 
-    @FindBy(xpath = ".//*[@class='inventory_item']//button[text()='Remove']")
+    @FindBy(xpath = ".//button[text()='Remove']")
     private List<WebElement> removeButtonsList;
 
     @FindBy(xpath = ".//span[@class='select_container']/span[@class='active_option']")
@@ -91,17 +91,21 @@ public class InventoryPage extends BasePage {
     }
 
     public Optional<WebElement> getElementByText(String text) {
-        return productsList.
-                stream().
-                filter(productEl -> productEl.findElement(By.className("inventory_item_name"))
-                        .getText().equals(text))
-                .findFirst();
+        return productsList.stream().filter(productEl -> productEl.findElement(By.className("inventory_item_name")).getText().equals(text)).findFirst();
     }
 
     public void sortProducts(String sortValue) {
         Select selectMenu = new Select(dropDownSort);
         selectMenu.selectByVisibleText(sortValue);
         this.waitForTextToBePresentInElement(currentSortOption, sortValue);
+
+    }
+
+    public InventoryPage addProductToCart(String productName) {
+        Assert.assertTrue(this.getElementByText(productName).isPresent(),
+                "Element with name" + productName + " should be present");
+        this.getElementByText(productName).get().findElement(By.xpath(addButtonLocator)).click();
+        return this;
 
     }
 
