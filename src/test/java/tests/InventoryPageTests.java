@@ -1,8 +1,10 @@
+package tests;
+
 import com.saucedemo.common.MiscUtils;
 import com.saucedemo.common.providers.DataProviders;
 import com.saucedemo.pages.InventoryPage;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -10,7 +12,7 @@ import java.util.List;
 public class InventoryPageTests extends BaseTest {
     InventoryPage productPage;
 
-    @BeforeMethod(alwaysRun = true)
+    @BeforeClass(alwaysRun = true)
     public void setUpTest() {
         this.login();
         productPage = new InventoryPage(basePage.driver);

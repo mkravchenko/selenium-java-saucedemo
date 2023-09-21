@@ -2,17 +2,13 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
 <suite name="All Test Suites">
-    <test name="Success Authentication" preserve-order="true">
+    <test name="All tests" preserve-order="true">
         <parameter name="lockedUser" value="locked_out_user"/>
         <classes>
-            <class name="TestAuth" />
-            <class name="InventoryPageTests" />
+            <class name="tests.AuthTest"/>
+            <class name="tests.InventoryPageTests"/>
+            <class name="tests.CartPageTests"/>
+            <class name="tests.MainMenuPageTest"/>
         </classes>
     </test>
-<!--    <test name="Success Authentication2" preserve-order="true">-->
-<!--        <parameter name="lockedUser" value="locked_out_user"/>-->
-<!--        <classes>-->
-<!--            <class name="InventoryPageTests" />-->
-<!--        </classes>-->
-<!--    </test>-->
 </suite>

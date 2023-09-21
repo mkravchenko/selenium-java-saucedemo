@@ -1,3 +1,5 @@
+package tests;
+
 import com.saucedemo.common.Constants.DefaultTimeouts;
 import com.saucedemo.common.Constants.LoginPageConstants;
 import com.saucedemo.common.Constants.UrlsConstants;

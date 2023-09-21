@@ -1,3 +1,5 @@
+package tests;
+
 import com.saucedemo.common.providers.DataProviders;
 import com.saucedemo.pages.LoginPage;
 import org.testng.annotations.BeforeMethod;
@@ -9,12 +11,12 @@ import static com.saucedemo.common.Constants.LoginPageConstants;
 import static com.saucedemo.common.Constants.UrlsConstants;
 import static org.testng.Assert.assertEquals;
 
-public class TestAuth extends BaseTest {
+public class AuthTest extends BaseTest {
 
     @BeforeMethod(alwaysRun = true)
     public void setUpTest() {
-        basePage.driver.manage().deleteAllCookies();
-        basePage.driver.get(UrlsConstants.SAUCE_DEMO_BASE_URL);
+        basePage.deleteCookie()
+                .navigateToUrl(UrlsConstants.SAUCE_DEMO_BASE_URL);
         loginPage = new LoginPage(basePage.driver);
     }
 

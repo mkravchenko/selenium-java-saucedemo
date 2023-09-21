@@ -1,5 +1,6 @@
 package com.saucedemo.pages;
 
+import com.saucedemo.common.AbstractWait;
 import com.saucedemo.common.Constants.DefaultTimeouts;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -28,10 +29,6 @@ public class BasePage {
         PageFactory.initElements(driver, this);
     }
 
-    public String getText(WebElement element) {
-        return element.getText();
-    }
-
     public int getNumberOfAddedProducts() {
         try {
             return Integer.parseInt(shoppingCardBadge.getText());
@@ -40,24 +37,20 @@ public class BasePage {
         }
     }
 
-    public YourCartPage openMainMenu() {
+    public MainMenuPage openMainMenu() {
         mainMenu.click();
-        return new YourCartPage(driver);
+        return new MainMenuPage(driver);
     }
 
     public YourCartPage openShoppingCard() {
         shoppingCard.click();
-        return new YourCartPage(driver);
+        YourCartPage yourCartPage = new YourCartPage(driver);
+        yourCartPage.waitForCartPageLoaded();
+        return yourCartPage;
     }
 
     public void wait_for_base_page_loaded() {
-        this.waitForElementToBeVisible(mainMenu);
-    }
-
-    public WebDriver waitForElementToBeVisible(WebElement element) {
-        new WebDriverWait(driver, DefaultTimeouts.EXPLICIT_WAIT)
-                .until(ExpectedConditions.visibilityOf(element));
-        return driver;
+        AbstractWait.waitForElementToBeVisible(driver, mainMenu);
     }
 
     public WebDriver waitForTextToBePresentInElement(WebElement element, String text) {
@@ -70,8 +63,18 @@ public class BasePage {
         return driver.getCurrentUrl();
     }
 
-    public boolean isPageLoaded(By by, String expectedText) {
-        driver.findElement(by);
-        return true;
+    public BasePage navigateToUrl(String url) {
+        driver.get(url);
+        return this;
+    }
+
+    public BasePage navigateBack() {
+        driver.navigate().back();
+        return this;
+    }
+
+    public BasePage deleteCookie() {
+        driver.manage().deleteAllCookies();
+        return this;
     }
 }

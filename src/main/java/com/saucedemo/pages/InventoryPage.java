@@ -19,9 +19,10 @@ import java.util.stream.Collectors;
 public class InventoryPage extends BasePage {
 
     final String addButtonLocator = ".//button[text()='Add to cart']";
-    @FindBy(className = "title")
 
+    @FindBy(className = "title")
     private WebElement title;
+
     @FindBy(xpath = ".//*[@id='inventory_container']//img['inventory_item_img']")
     private List<WebElement> productImagesList;
 
@@ -51,6 +52,10 @@ public class InventoryPage extends BasePage {
 
     public InventoryPage(WebDriver driver) {
         super(driver);
+    }
+
+    public boolean isPageLoaded() {
+        return title.getText().equals("Products") && title.isDisplayed();
     }
 
     public int getProductsNumber() {

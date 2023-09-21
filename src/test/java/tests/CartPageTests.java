@@ -1,3 +1,5 @@
+package tests;
+
 import com.saucedemo.pages.InventoryPage;
 import com.saucedemo.pages.YourCartPage;
 import org.testng.Assert;
